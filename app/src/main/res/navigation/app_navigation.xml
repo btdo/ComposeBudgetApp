@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/overviewDestination">
+    <fragment
+        android:id="@+id/overviewDestination"
+        android:name="com.example.composebudgetapp.fragments.OverviewFragment"
+        android:label="Overview"/>
+
+    <fragment
+        android:id="@+id/accountsDestination"
+        android:name="com.example.composebudgetapp.fragments.AccountsFragment"
+        android:label="Accounts"/>
+
+    <fragment
+        android:id="@+id/billsDestination"
+        android:name="com.example.composebudgetapp.fragments.BillsFragment"
+        android:label="Bills"/>
+</navigation>
