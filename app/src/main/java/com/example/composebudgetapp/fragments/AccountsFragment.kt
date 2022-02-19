@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.viewModels
 import com.example.composebudgetapp.R
 
@@ -15,6 +16,10 @@ class AccountsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.accounts_fragment, container, false)
+        return ComposeView(requireContext()).apply {
+            setContent {
+
+            }
+        }
     }
 }
