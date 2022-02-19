@@ -1,7 +1,13 @@
 package com.example.composebudgetapp.fragments
 
 import androidx.lifecycle.ViewModel
+import com.example.composebudgetapp.AppState
+import com.example.composebudgetapp.BudgetRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Inject
 
-class OverviewViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+@HiltViewModel
+class OverviewViewModel  @Inject constructor(private val repository: BudgetRepository) : ViewModel() {
+    val appState: StateFlow<AppState> = repository.appState
 }

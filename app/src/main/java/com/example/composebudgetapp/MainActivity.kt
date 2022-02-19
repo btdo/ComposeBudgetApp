@@ -19,7 +19,9 @@ import com.example.composebudgetapp.ui.AppScreen
 import com.example.composebudgetapp.ui.LoadingScreen
 import com.example.composebudgetapp.ui.theme.ComposeBudgetAppTheme
 import com.google.accompanist.insets.ProvideWindowInsets
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
