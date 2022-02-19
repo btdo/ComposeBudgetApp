@@ -37,7 +37,6 @@ fun OverviewPreview() {
 fun OverviewScreen(userData: UserData) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
         AlertCard()

@@ -5,14 +5,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.example.composebudgetapp.data.UserData
 import com.example.composebudgetapp.databinding.MainActivityBinding
 import com.example.composebudgetapp.ui.AppBottomNavigation
 import com.example.composebudgetapp.ui.AppScreen
@@ -73,6 +73,8 @@ fun MainApp(getNavController: () -> NavController ) {
         }
     )
     }) {
-        AndroidViewBinding(MainActivityBinding::inflate)
+        Box(modifier = Modifier.padding(it)){
+            AndroidViewBinding(MainActivityBinding::inflate)
+        }
     }
 }
