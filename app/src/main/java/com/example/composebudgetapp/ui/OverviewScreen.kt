@@ -23,7 +23,7 @@ import com.example.composebudgetapp.data.UserData
 import com.example.composebudgetapp.ui.theme.ComposeBudgetAppTheme
 import java.text.DecimalFormat
 
-private val RallyDefaultPadding = 12.dp
+
 
 @Preview
 @Composable
@@ -208,78 +208,8 @@ fun BillsHeaderDivider(bills: List<Bill>) {
 }
 
 
-@Composable
-fun AccountItem(account: Account, modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(RallyDefaultPadding),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        ItemBar(account.color)
-        Spacer(Modifier.width(RallyDefaultPadding))
-        ItemInfo(
-            title = account.name,
-            digit = "• • • • •" + AccountDecimalFormat.format(account.number)
-        )
-        Spacer(Modifier.weight(1f))
-        AmountItem(amount = account.balance, {})
-    }
-}
-
-
-@Composable
-fun BillItem(bill: Bill, modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(RallyDefaultPadding),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        ItemBar(bill.color)
-        Spacer(Modifier.width(RallyDefaultPadding))
-        ItemInfo(
-            title = bill.name,
-            digit = "Due " + bill.due
-        )
-        Spacer(Modifier.weight(1f))
-        AmountItem(amount = bill.amount, {})
-    }
-}
-
-@Composable
-fun ItemBar(color: Color) {
-    Spacer(modifier = Modifier
-        .size(4.dp, 36.dp)
-        .background(color = color))
-}
-
-@Composable
-fun ItemInfo(title: String, digit: String) {
-    Column {
-        Text(text = title, style = MaterialTheme.typography.body1)
-        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-            Text(text = digit, style = MaterialTheme.typography.subtitle1)
-        }
-    }
-}
-
-@Composable
-fun AmountItem(amount: Float, onClick: () -> Unit) {
-    val dollarSign = if (amount < 0) "- $" else "$"
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Text(
-            text = dollarSign + " " + AmountDecimalFormat.format(amount),
-            style = MaterialTheme.typography.body2
-        )
-        IconButton(onClick = onClick) {
-            Icon(Icons.Filled.ChevronRight, contentDescription = "")
-        }
-    }
-}
 
 
 
-private val AccountDecimalFormat = DecimalFormat("####")
-private val AmountDecimalFormat = DecimalFormat("#,###.##")
+
 private const val SHOWN_ITEMS = 3
