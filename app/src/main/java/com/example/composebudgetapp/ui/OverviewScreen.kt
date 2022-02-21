@@ -24,24 +24,29 @@ import com.example.composebudgetapp.ui.theme.ComposeBudgetAppTheme
 import java.text.DecimalFormat
 
 
-
 @Preview
 @Composable
 fun OverviewPreview() {
     ComposeBudgetAppTheme {
-        OverviewScreen(userData = FakeData)
+        OverviewScreen(userData = FakeData, {},{},{},{})
     }
 }
 
 @Composable
-fun OverviewScreen(userData: UserData) {
+fun OverviewScreen(
+    userData: UserData,
+    onViewAllAccounts: () -> Unit,
+    onViewAccount: (Account) -> Unit,
+    onViewAllBills: () -> Unit,
+    onViewBill: (Bill) -> Unit
+) {
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
     ) {
         AlertCard()
-        AccountsCard(userData.accountList, {}, {})
-        BillsCard(userData.billList, {}, {})
+        AccountsCard(userData.accountList, onViewAccount, onViewAllAccounts)
+        BillsCard(userData.billList, onViewBill, onViewAllBills)
     }
 }
 
@@ -116,7 +121,11 @@ fun AppDivider(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun AccountsCard(accounts: List<Account>, onAccountSelected: (Account) -> Unit, onSelectAll: () -> Unit) {
+fun AccountsCard(
+    accounts: List<Account>,
+    onAccountSelected: (Account) -> Unit,
+    onSelectAll: () -> Unit
+) {
     var total = accounts.map { account -> account.balance }.sum()
     val totalStr = AmountDecimalFormat.format(total)
 
@@ -173,8 +182,8 @@ fun BillsCard(bills: List<Bill>, onBillSelected: (Bill) -> Unit, onSelectAll: ()
 }
 
 @Composable
-fun SeeAllButton(onSelectAll: () -> Unit){
-    Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.Center) {
+fun SeeAllButton(onSelectAll: () -> Unit) {
+    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         TextButton(onClick = onSelectAll) {
             Text(text = "SEE ALL")
         }
@@ -206,10 +215,6 @@ fun BillsHeaderDivider(bills: List<Bill>) {
         }
     }
 }
-
-
-
-
 
 
 private const val SHOWN_ITEMS = 3

@@ -10,9 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.viewModels
 import com.example.composebudgetapp.AppState
-import com.example.composebudgetapp.R
 import com.example.composebudgetapp.ui.AccountsScreen
-import com.example.composebudgetapp.ui.OverviewScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,7 +25,7 @@ class AccountsFragment : Fragment() {
             setContent {
                 val appState by viewModel.appState.collectAsState()
                 when(appState){
-                    is AppState.SUCCESS_LOADING -> AccountsScreen(accounts = (appState as AppState.SUCCESS_LOADING).userData.accountList, {})
+                    is AppState.SUCCESS_LOADING.AccountsNavigationState -> AccountsScreen(accounts = (appState as AppState.SUCCESS_LOADING.AccountsNavigationState).accounts, {})
                 }
             }
         }

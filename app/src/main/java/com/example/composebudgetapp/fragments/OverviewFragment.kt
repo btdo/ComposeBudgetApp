@@ -10,8 +10,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.viewModels
 import com.example.composebudgetapp.AppState
-import com.example.composebudgetapp.R
-import com.example.composebudgetapp.data.FakeData
 import com.example.composebudgetapp.ui.OverviewScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,8 +24,18 @@ class OverviewFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 val appState by viewModel.appState.collectAsState()
-                when(appState){
-                    is AppState.SUCCESS_LOADING -> OverviewScreen(userData = (appState as AppState.SUCCESS_LOADING).userData)
+
+                when (appState) {
+                    is AppState.SUCCESS_LOADING.OverviewNavigationState -> OverviewScreen(userData = (appState as AppState.SUCCESS_LOADING.OverviewNavigationState).userOverview,
+                        {
+                            viewModel.navigateToAccounts()
+                        }, {
+                            viewModel.navigateToAccounts(listOf(it))
+                        }, {
+                            viewModel.navigateToBills()
+                        }, {
+                            viewModel.navigateToBills(listOf(it))
+                        })
                 }
             }
         }
