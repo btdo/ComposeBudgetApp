@@ -5,13 +5,14 @@ import com.example.composebudgetapp.AppState
 import com.example.composebudgetapp.BudgetRepository
 import com.example.composebudgetapp.data.Account
 import com.example.composebudgetapp.data.Bill
+import com.example.composebudgetapp.data.UserData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class OverviewViewModel  @Inject constructor(private val repository: BudgetRepository) : ViewModel() {
-    val appState: StateFlow<AppState> = repository.appState
+    val userData: StateFlow<UserData> = repository.userData
 
     fun navigateToAccounts(accounts: List<Account>? = null){
         repository.navigateToAccounts(accounts)

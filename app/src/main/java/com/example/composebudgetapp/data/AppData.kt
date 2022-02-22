@@ -16,28 +16,33 @@
 
 package com.example.composebudgetapp.data
 
+import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
+import kotlinx.parcelize.Parcelize
 
 /* Hard-coded data for the Rally sample. */
 
 @Immutable
+@Parcelize
 data class Account(
     val name: String,
     val number: Int,
     val balance: Float,
     val color: Color
-)
+): Parcelable
 
 @Immutable
+@Parcelize
 data class Bill(
     val name: String,
     val due: String,
     val amount: Float,
     val color: Color
-)
+): Parcelable
 
-data class UserData (val accountList: List<Account>, val billList: List<Bill>)
+@Parcelize
+data class UserData (val accountList: List<Account>, val billList: List<Bill>): Parcelable
 val accounts: List<Account> = listOf(
     Account(
         "Checking",

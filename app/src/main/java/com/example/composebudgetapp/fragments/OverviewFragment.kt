@@ -8,14 +8,19 @@ import android.view.ViewGroup
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
+import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.example.composebudgetapp.AppState
+import androidx.navigation.findNavController
+import com.example.composebudgetapp.MainViewModel
+import com.example.composebudgetapp.R
 import com.example.composebudgetapp.ui.OverviewScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class OverviewFragment : Fragment() {
     private val viewModel by viewModels<OverviewViewModel>()
+    private val activityViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,20 +28,18 @@ class OverviewFragment : Fragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
-                val appState by viewModel.appState.collectAsState()
+                val userData by viewModel.userData.collectAsState()
+                OverviewScreen(userData = userData,
+                    {
+                        activityViewModel.navigateToAccounts()
+                    }, {
+                        activityViewModel.navigateToAccounts(listOf(it))
+                    }, {
+                        activityViewModel.navigateToBills()
+                    }, {
+                        activityViewModel.navigateToBills(listOf(it))
+                    })
 
-                when (appState) {
-                    is AppState.SUCCESS_LOADING.OverviewNavigationState -> OverviewScreen(userData = (appState as AppState.SUCCESS_LOADING.OverviewNavigationState).userOverview,
-                        {
-                            viewModel.navigateToAccounts()
-                        }, {
-                            viewModel.navigateToAccounts(listOf(it))
-                        }, {
-                            viewModel.navigateToBills()
-                        }, {
-                            viewModel.navigateToBills(listOf(it))
-                        })
-                }
             }
         }
     }

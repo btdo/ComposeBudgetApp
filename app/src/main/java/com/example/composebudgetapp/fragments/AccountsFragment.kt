@@ -10,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.viewModels
 import com.example.composebudgetapp.AppState
+import com.example.composebudgetapp.data.Account
 import com.example.composebudgetapp.ui.AccountsScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,13 +22,16 @@ class AccountsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val accounts = arguments?.get("extra")
         return ComposeView(requireContext()).apply {
             setContent {
-                val appState by viewModel.appState.collectAsState()
-                when(appState){
-                    is AppState.SUCCESS_LOADING.AccountsNavigationState -> AccountsScreen(accounts = (appState as AppState.SUCCESS_LOADING.AccountsNavigationState).accounts, {})
-                }
+                val userData by viewModel.userData.collectAsState()
+                val param = if (accounts != null) accounts as List<Account> else userData.accountList
+                AccountsScreen(
+                    accounts = param,
+                    {})
             }
         }
     }
+
 }
