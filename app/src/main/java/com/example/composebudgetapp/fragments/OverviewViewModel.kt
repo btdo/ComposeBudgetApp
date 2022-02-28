@@ -12,13 +12,5 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OverviewViewModel  @Inject constructor(private val repository: BudgetRepository) : ViewModel() {
-    val userData: StateFlow<UserData> = repository.userData
-
-    fun navigateToAccounts(accounts: List<Account>? = null){
-        repository.navigateToAccounts(accounts)
-    }
-
-    fun navigateToBills(bills: List<Bill>? = null){
-        repository.navigateToBills(bills)
-    }
+    val appState: StateFlow<AppState> = repository.appState
 }

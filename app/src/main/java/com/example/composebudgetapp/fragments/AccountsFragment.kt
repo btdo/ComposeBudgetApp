@@ -25,11 +25,14 @@ class AccountsFragment : Fragment() {
         val accounts = arguments?.get("extra")
         return ComposeView(requireContext()).apply {
             setContent {
-                val userData by viewModel.userData.collectAsState()
-                val param = if (accounts != null) accounts as List<Account> else userData.accountList
-                AccountsScreen(
-                    accounts = param,
-                    {})
+                val appState by viewModel.appState.collectAsState()
+                when (appState) {
+                    is AppState.SUCCESS_LOADING -> {
+                        val param =
+                            if (accounts != null) accounts as List<Account> else (appState as AppState.SUCCESS_LOADING).userData.accountList
+                        AccountsScreen(accounts = param, {})
+                    }
+                }
             }
         }
     }

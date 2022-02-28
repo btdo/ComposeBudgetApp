@@ -10,9 +10,5 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountsViewModel @Inject constructor(private val repository: BudgetRepository): ViewModel() {
-    val userData: StateFlow<UserData> = repository.userData
-
-    fun updateScreen(){
-        repository.navigateToAccounts()
-    }
+    val appState: StateFlow<AppState> = repository.appState
 }

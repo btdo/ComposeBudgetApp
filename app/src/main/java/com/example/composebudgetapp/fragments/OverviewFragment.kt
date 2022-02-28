@@ -12,6 +12,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import com.example.composebudgetapp.AppState
 import com.example.composebudgetapp.MainViewModel
 import com.example.composebudgetapp.R
 import com.example.composebudgetapp.ui.OverviewScreen
@@ -28,18 +29,21 @@ class OverviewFragment : Fragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
-                val userData by viewModel.userData.collectAsState()
-                OverviewScreen(userData = userData,
-                    {
-                        activityViewModel.navigateToAccounts()
-                    }, {
-                        activityViewModel.navigateToAccounts(listOf(it))
-                    }, {
-                        activityViewModel.navigateToBills()
-                    }, {
-                        activityViewModel.navigateToBills(listOf(it))
-                    })
-
+                val appState by viewModel.appState.collectAsState()
+                when(appState) {
+                    is AppState.SUCCESS_LOADING -> {
+                        OverviewScreen(userData = (appState as AppState.SUCCESS_LOADING).userData,
+                            {
+                                activityViewModel.navigateToAccounts()
+                            }, {
+                                activityViewModel.navigateToAccounts(listOf(it))
+                            }, {
+                                activityViewModel.navigateToBills()
+                            }, {
+                                activityViewModel.navigateToBills(listOf(it))
+                            })
+                    }
+                }
             }
         }
     }
