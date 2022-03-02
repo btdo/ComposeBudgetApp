@@ -9,6 +9,6 @@ import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class AccountsViewModel @Inject constructor(private val repository: BudgetRepository): ViewModel() {
+class AccountsViewModel @Inject constructor(repository: BudgetRepository): ViewModel() {
     val appState: StateFlow<AppState> = repository.appState
 }

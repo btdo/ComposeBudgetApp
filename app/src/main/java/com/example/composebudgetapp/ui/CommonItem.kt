@@ -1,6 +1,7 @@
 package com.example.composebudgetapp.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -20,10 +21,11 @@ val AccountDecimalFormat = DecimalFormat("####")
 val AmountDecimalFormat = DecimalFormat("#,###.##")
 
 @Composable
-fun AccountItem(account: Account, modifier: Modifier = Modifier) {
+fun AccountItem(account: Account, onAccountSelected: () -> Unit) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
+        modifier = Modifier.clickable {
+           onAccountSelected()
+        }.fillMaxWidth()
             .padding(RallyDefaultPadding),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -34,17 +36,16 @@ fun AccountItem(account: Account, modifier: Modifier = Modifier) {
             digit = "• • • • •" + AccountDecimalFormat.format(account.number)
         )
         Spacer(Modifier.weight(1f))
-        AmountItem(amount = account.balance, {})
+        AmountItem(amount = account.balance, onAccountSelected)
     }
 }
 
-
 @Composable
-fun BillItem(bill: Bill, modifier: Modifier = Modifier) {
+fun BillItem(bill: Bill, onBillSelected: () -> Unit) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(RallyDefaultPadding),
+        modifier = Modifier.clickable {
+            onBillSelected()
+        }.fillMaxWidth().padding(RallyDefaultPadding),
         verticalAlignment = Alignment.CenterVertically
     ) {
         ItemBar(bill.color)
@@ -54,15 +55,19 @@ fun BillItem(bill: Bill, modifier: Modifier = Modifier) {
             digit = "Due " + bill.due
         )
         Spacer(Modifier.weight(1f))
-        AmountItem(amount = bill.amount, {})
+        AmountItem(amount = bill.amount, onBillSelected)
     }
 }
 
+
+
 @Composable
 fun ItemBar(color: Color) {
-    Spacer(modifier = Modifier
-        .size(4.dp, 36.dp)
-        .background(color = color))
+    Spacer(
+        modifier = Modifier
+            .size(4.dp, 36.dp)
+            .background(color = color)
+    )
 }
 
 @Composable
@@ -91,27 +96,35 @@ fun AmountItem(amount: Float, onClick: () -> Unit) {
 
 
 @Composable
-fun ItemsTotal(accounts: List<Account>) {
-    val colors = accounts.map {
-        it.color
+fun <T> ItemsTotal(items: List<T>, getColor: (T) -> Color, getValue: (T) -> Float) {
+    val colors = items.map {
+        getColor(it)
     }
-    val total = accounts.map{
-        it.balance
+
+    val total = items.map {
+        getValue(it)
     }.sum()
 
-    val proportions =  accounts.map {
-        it.balance / total
+    val proportions = items.map{
+        getValue(it)/total
     }
 
-    Box(Modifier.padding(RallyDefaultPadding)){
-        AnimatedCircle(proportions = proportions, colors = colors,
+    Box(Modifier.padding(RallyDefaultPadding)) {
+        AnimatedCircle(
+            proportions = proportions, colors = colors,
             Modifier
                 .height(300.dp)
                 .align(
                     Alignment.Center
                 )
-                .fillMaxWidth())
-        Column(modifier = Modifier.fillMaxWidth().align(Alignment.Center), horizontalAlignment = Alignment.CenterHorizontally) {
+                .fillMaxWidth()
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.Center),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Text(text = "Total", style = MaterialTheme.typography.body1)
             Text(text = AmountDecimalFormat.format(total), style = MaterialTheme.typography.h2)
         }

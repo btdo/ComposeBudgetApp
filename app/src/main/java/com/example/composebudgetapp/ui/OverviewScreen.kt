@@ -142,9 +142,9 @@ fun AccountsCard(
             ItemsOverview(title = "Account", total = totalStr)
             AccountHeaderDivider(accounts = accounts)
             accounts.take(SHOWN_ITEMS).forEach {
-                AccountItem(account = it, modifier = Modifier.clickable {
+                AccountItem(account = it) {
                     onAccountSelected(it)
-                })
+                }
                 AppDivider()
             }
             SeeAllButton(onSelectAll = onSelectAll)
@@ -171,9 +171,9 @@ fun BillsCard(bills: List<Bill>, onBillSelected: (Bill) -> Unit, onSelectAll: ()
             ItemsOverview(title = "Bill", total = totalStr)
             BillsHeaderDivider(bills = bills)
             bills.take(SHOWN_ITEMS).forEach {
-                BillItem(bill = it, modifier = Modifier.clickable {
+                BillItem(bill = it) {
                     onBillSelected(it)
-                })
+                }
                 AppDivider()
             }
             SeeAllButton(onSelectAll = onSelectAll)
