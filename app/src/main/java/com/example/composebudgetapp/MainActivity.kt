@@ -102,7 +102,7 @@ fun BudgetApp(
     ComposeBudgetAppTheme {
         Surface(color = MaterialTheme.colors.background) {
             val appState by viewModel.appState.collectAsState()
-            val currentScreen by viewModel.currentScreen.collectAsState()
+            val currentScreen by viewModel.currentScreen.collectAsState(AppScreen.Overview)
             when (appState) {
                 is AppState.LOADING -> LoadingScreen()
                 is AppState.ERROR -> Text(text = "Something went wrong")
