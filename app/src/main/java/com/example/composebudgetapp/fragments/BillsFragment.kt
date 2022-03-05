@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import com.example.composebudgetapp.AppState
 import com.example.composebudgetapp.MainViewModel
 import com.example.composebudgetapp.R
+import com.example.composebudgetapp.collectAsStateLifeCycle
 import com.example.composebudgetapp.data.Account
 import com.example.composebudgetapp.data.Bill
 import com.example.composebudgetapp.ui.AccountsScreen
@@ -33,7 +34,7 @@ class BillsFragment : Fragment() {
         val accounts = arguments?.get("extra")
         return ComposeView(requireContext()).apply {
             setContent {
-                val appState by viewModel.appState.collectAsState()
+                val appState by viewModel.appState.collectAsStateLifeCycle()
                 when (appState) {
                     is AppState.SUCCESS_LOADING -> {
                         val param =

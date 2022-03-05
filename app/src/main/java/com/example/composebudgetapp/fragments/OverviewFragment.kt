@@ -15,6 +15,7 @@ import androidx.navigation.findNavController
 import com.example.composebudgetapp.AppState
 import com.example.composebudgetapp.MainViewModel
 import com.example.composebudgetapp.R
+import com.example.composebudgetapp.collectAsStateLifeCycle
 import com.example.composebudgetapp.ui.OverviewScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,7 +30,7 @@ class OverviewFragment : Fragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
-                val appState by viewModel.appState.collectAsState()
+                val appState by viewModel.appState.collectAsStateLifeCycle()
                 when(appState) {
                     is AppState.SUCCESS_LOADING -> {
                         OverviewScreen(userData = (appState as AppState.SUCCESS_LOADING).userData,
